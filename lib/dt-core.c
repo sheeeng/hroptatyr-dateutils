@@ -757,6 +757,8 @@ dt_strpdt(const char *str, const char *fmt, char **ep)
 	}
 	/* check if it's a sexy type */
 	if (d.i) {
+		/* swap INT_MIN and d.i again */
+		d.i = d.i > INT_MIN ? d.i : 0;
 		res.typ = DT_SEXY;
 		res.sexy = d.i;
 	} else {
