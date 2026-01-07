@@ -286,6 +286,8 @@ __strpdt_card(struct strpdt_s *d, const char *sp, struct dt_spec_s s, char **ep)
 		if (UNLIKELY(d->i == INT64_MIN || tp == sp)) {
 			res = -1;
 		} else {
+			/* swap 0 and INT_MIN */
+			d->i = d->i ?: INT_MIN;
 			sp = tp;
 		}
 		if (s.spfl == DT_SPFL_N_EPOCHNS) {
