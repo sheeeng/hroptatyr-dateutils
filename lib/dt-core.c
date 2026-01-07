@@ -1409,6 +1409,8 @@ dt_datetime(dt_dttyp_t outtyp)
 		/* must be one of the sexies then, aye? */
 		res.sexy = tv.tv_sec;
 	}
+	/* always ignore time zone fixups */
+	res.znfxd = 1;
 	return res;
 }
 
