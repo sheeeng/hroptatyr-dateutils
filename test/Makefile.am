@@ -782,6 +782,7 @@ dt_tests += dtadd.052.ctst
 dt_tests += dtadd.053.ctst
 dt_tests += dtadd.054.ctst
 dt_tests += dtadd.055.ctst
+dt_tests += dtadd.056.ctst
 
 dt_tests += dtgrep.001.ctst
 dt_tests += dtgrep.002.ctst
