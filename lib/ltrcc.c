@@ -69,6 +69,7 @@ static int
 pr_line_corr(const char *line, size_t llen, va_list UNUSED(vap))
 {
 	static unsigned long int cor;
+	unsigned long int val;
 	char *sp, *ep;
 
 	if (llen == PROLOGUE) {
@@ -94,9 +95,9 @@ const int32_t %s[] = {\n\
 		return 0;
 	}
 	/* otherwise process */
-	if ((sp = memchr(line, '\t', llen)) == NULL) {
+	if ((ep = NULL, val = strtoul(line, &ep, 10), ep == NULL || val == ULONG_MAX)) {
 		return -1;
-	} else if ((ep = NULL, cor = strtoul(++sp, &ep, 10), ep == NULL || cor == ULONG_MAX)) {
+	} else if ((sp = ep, ep = NULL, cor = strtoul(++sp, &ep, 10), ep == NULL || cor == ULONG_MAX)) {
 		return -1;
 	}
 

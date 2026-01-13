@@ -55,29 +55,14 @@ typedef ssize_t sidx_t;
 
 /* this can be called roughly 100m/sec */
 #define DEF_FIND_BEFORE(N, X)					\
-static zidx_t							\
-find_before_##N(						\
-	const X v[], size_t nv, X key, zidx_t i, zidx_t min, zidx_t max) \
+DEFUN zidx_t							\
+leaps_before_##N(						\
+	const X v[], size_t nv, X key)				\
 {								\
 /* Given key K find the index of the transition before */	\
-	do {							\
-		X lo, up;					\
-								\
-		lo = v[i];					\
-		up = v[i + 1];					\
-								\
-		if (key > lo && key <= up) {			\
-			/* found him */				\
-			break;					\
-		} else if (key > up) {				\
-			min = i + 1;				\
-			i = (i + max) / 2;			\
-		} else if (key <= lo) {				\
-			max = i - 1;				\
-			i = (i + min) / 2;			\
-		}						\
-	} while (max > min && i < nv);				\
-	return i;						\
+	size_t i;						\
+	for (i = 1U; i < nv && key > v[i]; i++);		\
+	return --i;						\
 }								\
 static const int UNUSED(defined_find_before_##name##_p)
 
@@ -85,48 +70,6 @@ DEF_FIND_BEFORE(ui32, uint32_t);
 DEF_FIND_BEFORE(si32, int32_t);
 DEF_FIND_BEFORE(ui64, uint64_t);
 DEF_FIND_BEFORE(si64, int64_t);
-
-
-/* public apis */
-DEFUN zidx_t
-leaps_before_ui32(const uint32_t fld[], size_t nfld, uint32_t key)
-{
-	zidx_t min = 0;
-	zidx_t max = nfld - 1;
-	zidx_t this = max / 2;
-
-	return find_before_ui32(fld, nfld, key, this, min, max);
-}
-
-DEFUN zidx_t
-leaps_before_si32(const int32_t fld[], size_t nfld, int32_t key)
-{
-	zidx_t min = 0;
-	zidx_t max = nfld - 1;
-	zidx_t this = max / 2;
-
-	return find_before_si32(fld, nfld, key, this, min, max);
-}
-
-DEFUN zidx_t
-leaps_before_ui64(const uint64_t fld[], size_t nfld, uint64_t key)
-{
-	zidx_t min = 0;
-	zidx_t max = nfld - 1;
-	zidx_t this = max / 2;
-
-	return find_before_ui64(fld, nfld, key, this, min, max);
-}
-
-DEFUN zidx_t
-leaps_before_si64(const int64_t fld[], size_t nfld, int64_t key)
-{
-	zidx_t min = 0;
-	zidx_t max = nfld - 1;
-	zidx_t this = max / 2;
-
-	return find_before_si64(fld, nfld, key, this, min, max);
-}
 
 #endif	/* INCLUDED_leaps_c_ */
 /* leaps.c ends here */
