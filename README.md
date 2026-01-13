@@ -176,8 +176,8 @@ dateadd
     =>
       2012-03-11T08:05:00
 
-  If supported by the system's zoneinfo database leap-second adjusted
-  calculations are possible.  Use the unit `rs` to denote "real" seconds:
+  Leap-second adjusted calculations are also possible.
+  Use the unit `rs` to denote "real" seconds:
 
     $ dateadd '2012-06-30 23:59:30' +30rs
     =>
